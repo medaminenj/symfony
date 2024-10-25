@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Search Servers by Date{% endblock %}
+
+{% block body %}
+    <h1>Search Servers by Date of Birth</h1>
+    <form action="{{ path('app_serveur_search') }}" method="get">
+        <label for="date1">Date of Birth From:</label>
+        <input type="date" id="date1" name="date1" value="{{ date1 }}" required>
+        
+        <label for="date2">Date of Birth To:</label>
+        <input type="date" id="date2" name="date2" value="{{ date2 }}" required>
+        
+        <button type="submit">Search</button>
+    </form>
+
+    {% if serveurs is defined %}
+        <h2>Search Results</h2>
+        {% if serveurs is empty %}
+            <p>No servers found in the specified date range.</p>
+        {% else %}
+            <ul>
+                {% for serveur in serveurs %}
+                    <li>
+                        <strong>{{ serveur.nom|upper }}</strong><br>
+                        <p><b>Date of Birth: </b>{{ serveur.datenaissance|date('Y-m-d') }}</p>
+                        <p><b>Restaurant: </b>{{ serveur.restaurant ? serveur.restaurant.nom : 'No Restaurant' }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endif %}
+{% endblock %}

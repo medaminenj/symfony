@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% block title %} Authors list {% endblock %}
+
+{% block body %}
+{% set nbBooks=0 %}
+    {% if authors is empty %}
+        <p>No authors found</p>
+    {% else %}
+        <ul>
+            {% for author in authors %}
+            {% set nbBooks = nbBooks + author.nbBooks %}
+                <li>
+                    <img src="{{ asset(author.picture) }}" alt="Picture of {{ author.username }}" width="100"><br>
+                    <strong>{{ author.username|upper }}</strong><br>
+                    <p><b>Email: </b>{{ author.email }}</p>
+                    <p><b>Number of books: </b>{{ author.nbBooks }}</p>
+                    <a href="{{ path('app_author_details', { id: author.id }) }}">Details</a>
+                    <a href="{{path('app_author_edit', { id : author.id })}}" >Edit</a>
+                    <a href="{{path('app_author_delete', { id : author.id })}}" >Delete</a>
+                </li>
+                <hr>
+            {% endfor %}
+        </ul>
+    
+    {% endif %}
+<p><b>Number of authors: </b> {{authors | length}}</p>
+<p><b>Number of books: </b> {{nbBooks}}</p>
+{% endblock %}
+
+

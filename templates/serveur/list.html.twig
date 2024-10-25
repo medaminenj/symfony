@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block title %}Servers List{% endblock %}
+
+{% block body %}
+    {% set totalServers = 0 %}
+    {% if serveurs is empty %}
+        <p>No servers found</p>
+    {% else %}
+        <ul>
+            {% for serveur in serveurs %}
+                {% set totalServers = totalServers + 1 %}
+                <li>
+                    <strong>{{ serveur.nom|upper }}</strong><br>
+                    <p><b>Date of Birth: </b>{{ serveur.datenaissance ? serveur.datenaissance|date('Y-m-d') : 'N/A' }}</p>
+                    <p><b>Number of Restaurants: </b>{{ serveur.restaurant ? 1 : 0 }}</p> {# Assuming each serveur has one restaurant #}
+                    <a href="{{ path('app_serveur_details', { id: serveur.id }) }}">Details</a>
+                    <a href="{{ path('app_serveur_edit', { id: serveur.id }) }}">Edit</a>
+                    <a href="{{ path('app_serveur_delete', { id: serveur.id }) }}">Delete</a>
+                </li>
+                <hr>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <p><b>Number of servers: </b> {{ totalServers }}</p>
+{% endblock %}

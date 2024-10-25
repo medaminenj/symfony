@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ restaurant.nom }}'s Details {% endblock %}
+
+{% block body %}
+    <h1>{{ restaurant.nom }}</h1>
+    <p><b>Address: </b>{{ restaurant.adresse }}</p>
+    <p><b>Number of Servers: </b>{{ restaurant.serveurs | length }}</p> {# Assuming a relationship to servers #}
+    <p><b>List of Servers:</b></p>
+    <ul>
+        {% for serveur in restaurant.serveurs %}
+            <li>{{ serveur.username }}</li> {# Assuming Server entity has a username field #}
+        {% else %}
+            <li>No servers assigned.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

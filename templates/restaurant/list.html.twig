@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block title %} Restaurants List {% endblock %}
+
+{% block body %}
+{% set totalRestaurants = 0 %}
+    {% if restaurants is empty %}
+        <p>No restaurants found</p>
+    {% else %}
+        <ul>
+            {% for restaurant in restaurants %}
+                {% set totalRestaurants = totalRestaurants + 1 %}
+                <li>
+                    <strong>{{ restaurant.nom|upper }}</strong><br>
+                    <p><b>Address: </b>{{ restaurant.adresse }}</p>
+                    <p><b>Number of Servers: </b>{{ restaurant.serveurs | length }}</p> {# Assuming a relationship to servers #}
+                    <a href="{{ path('app_restaurant_details', { id: restaurant.id }) }}">Details</a>
+                    <a href="{{ path('app_restaurant_edit', { id: restaurant.id }) }}">Edit</a>
+                    <a href="{{ path('app_restaurant_delete', { id: restaurant.id }) }}">Delete</a>
+                </li>
+                <hr>
+            {% endfor %}
+        </ul>
+    {% endif %}
+<p><b>Number of restaurants: </b> {{ restaurants | length }}</p>
+{% endblock %}
